@@ -5,13 +5,25 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/ralger)](https://cran.r-project.org/package=ralger)
+
 <!-- badges: end -->
+
+[![](http://cranlogs.r-pkg.org/badges/grand-total/ralger?color=blue)](https://cran.r-project.org/package=ralger)
 
 The goal of **ralger** is to facilitate web scraping in R.
 
 ## Installation
 
-You can install the development version from
+You can install the ralger package from
+[CRAN](https://cran.r-project.org/) with:
+
+``` r
+install.packages("ralger")
+```
+
+or you can install the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -24,36 +36,36 @@ devtools::install_github("feddelegrand7/ralger")
 This is an example which shows how to extract firms denomination from
 the website of the [Algerian Chamber of Commerce and
 Industry](http://elmouchir.caci.dz) (CACI). For simplicity, we’ll focus
-on firms operating within the capital (Alger).
+on firms operating within the capital (Algiers).
 
 ``` r
 library(ralger)
 
 my_link <- "http://elmouchir.caci.dz/search_results.php?keyword=&category=&location=Alger&submit=Trouver"
 
-my_node <- ".listing_default" # see SelectorGadget
+my_node <- ".listing_default" # The CSS element, we recommend SelectorGadget
 
 scrap(my_link, my_node)
 #>  [1] "Adjerid Hanifa"                                                               
 #>  [2] "Dar Chamila"                                                                  
-#>  [3] "SAMRIA AUTO / Salon Algerian du Materiel Roulant et de L'industrie Automobile"
-#>  [4] "YOUKAIS"                                                                      
-#>  [5] "EDIMETAL"                                                                     
-#>  [6] "SYRIAN AIR LINES"                                                             
-#>  [7] "Turkish Airlines / Direction Générale"                                        
-#>  [8] "Aigle Azur / Agence Didouche Mourad"                                          
-#>  [9] "British Airways"                                                              
-#> [10] "DELTA"                                                                        
-#> [11] "Cabinet Ammiche Amer"                                                         
-#> [12] "VERITEX"                                                                      
-#> [13] "Kermiche Partener"                                                            
-#> [14] "PROGOS"                                                                       
-#> [15] "Ambassade du Royaume d'Arabie Saoudite"                                       
-#> [16] "Ambassade de la République d'Argentine"                                       
-#> [17] "Ambassade du Burkina Faso"                                                    
-#> [18] "Ambassade du Canada"                                                          
-#> [19] "Ambassade de la République de Corée"                                          
-#> [20] "Ambassade de la République de Côte d'Ivoire"
+#>  [3] "TVA / Touring Voyages Algérie Centre / Zighoud Youcef"                        
+#>  [4] "SAMRIA AUTO / Salon Algerian du Materiel Roulant et de L'industrie Automobile"
+#>  [5] "YOUKAIS"                                                                      
+#>  [6] "EDIMETAL"                                                                     
+#>  [7] "SYRIAN AIR LINES"                                                             
+#>  [8] "Turkish Airlines / Direction Générale"                                        
+#>  [9] "Aigle Azur / Agence Didouche Mourad"                                          
+#> [10] "British Airways"                                                              
+#> [11] "DELTA"                                                                        
+#> [12] "Cabinet Ammiche Amer"                                                         
+#> [13] "VERITEX"                                                                      
+#> [14] "Kermiche Partener"                                                            
+#> [15] "Marine Soft"                                                                  
+#> [16] "PROGOS"                                                                       
+#> [17] "Ambassade du Royaume d'Arabie Saoudite"                                       
+#> [18] "Ambassade de la République d'Argentine"                                       
+#> [19] "Ambassade du Burkina Faso"                                                    
+#> [20] "Ambassade du Canada"
 ```
 
 If you want to scrap multiple list pages, just use `scrap()` in
@@ -66,92 +78,92 @@ my_link <- "http://elmouchir.caci.dz/search_results.php?keyword=&category=&locat
 my_node <- ".listing_default"
 
 scrap(paste(my_link, 0:2), my_node)
-#>  [1] "Esasoud Welding And Cutting"                                                
-#>  [2] "Huan Yu"                                                                    
-#>  [3] "HRLI"                                                                       
-#>  [4] "Dar El Hikma"                                                               
-#>  [5] "Trans Canal Centre / Khemis El Khechna"                                     
-#>  [6] "Direction Régionale Centre / Ex Trans Canal Centre"                         
-#>  [7] "Egt Sidi Fredj / Club Azur Plage"                                           
-#>  [8] "EGT Zeralda / Entreprise de Gestion Touristique de Zeralda"                 
-#>  [9] "SPE / Sociéte Algérienne de Production d’Electricité"                       
-#> [10] "GRTG / Société Algérienne de Gestion du Réseau de Transport  de Gaz"        
-#> [11] "GRTE  / Société Algérienne de Gestion du Réseau de Transport de Electricité"
-#> [12] "Clef du Sud"                                                                
-#> [13] "Adrien.Dz"                                                                  
-#> [14] "MPV"                                                                        
-#> [15] "SCAL / La Société des Ciments de l'Algérois"                                
-#> [16] "EVSM / Entreprise de Viabilisation de Sidi Moussa"                          
-#> [17] "Chambre d'Agriculture de la Wilaya d'Alger / CNA"                           
-#> [18] "VERITAL/ Direction Générale"                                                
-#> [19] "Wilaya d'Alger"                                                             
-#> [20] "Officine Abeille"                                                           
-#> [21] "Esasoud Welding And Cutting"                                                
-#> [22] "Huan Yu"                                                                    
-#> [23] "HRLI"                                                                       
-#> [24] "Dar El Hikma"                                                               
-#> [25] "Trans Canal Centre / Khemis El Khechna"                                     
-#> [26] "Direction Régionale Centre / Ex Trans Canal Centre"                         
-#> [27] "Egt Sidi Fredj / Club Azur Plage"                                           
-#> [28] "EGT Zeralda / Entreprise de Gestion Touristique de Zeralda"                 
-#> [29] "SPE / Sociéte Algérienne de Production d’Electricité"                       
-#> [30] "GRTG / Société Algérienne de Gestion du Réseau de Transport  de Gaz"        
-#> [31] "GRTE  / Société Algérienne de Gestion du Réseau de Transport de Electricité"
-#> [32] "Clef du Sud"                                                                
-#> [33] "Adrien.Dz"                                                                  
-#> [34] "MPV"                                                                        
-#> [35] "SCAL / La Société des Ciments de l'Algérois"                                
-#> [36] "EVSM / Entreprise de Viabilisation de Sidi Moussa"                          
-#> [37] "Chambre d'Agriculture de la Wilaya d'Alger / CNA"                           
-#> [38] "VERITAL/ Direction Générale"                                                
-#> [39] "Wilaya d'Alger"                                                             
-#> [40] "Officine Abeille"                                                           
-#> [41] "Esasoud Welding And Cutting"                                                
-#> [42] "Huan Yu"                                                                    
-#> [43] "HRLI"                                                                       
-#> [44] "Dar El Hikma"                                                               
-#> [45] "Trans Canal Centre / Khemis El Khechna"                                     
-#> [46] "Direction Régionale Centre / Ex Trans Canal Centre"                         
-#> [47] "Egt Sidi Fredj / Club Azur Plage"                                           
-#> [48] "EGT Zeralda / Entreprise de Gestion Touristique de Zeralda"                 
-#> [49] "SPE / Sociéte Algérienne de Production d’Electricité"                       
-#> [50] "GRTG / Société Algérienne de Gestion du Réseau de Transport  de Gaz"        
-#> [51] "GRTE  / Société Algérienne de Gestion du Réseau de Transport de Electricité"
-#> [52] "Clef du Sud"                                                                
-#> [53] "Adrien.Dz"                                                                  
-#> [54] "MPV"                                                                        
-#> [55] "SCAL / La Société des Ciments de l'Algérois"                                
-#> [56] "EVSM / Entreprise de Viabilisation de Sidi Moussa"                          
-#> [57] "Chambre d'Agriculture de la Wilaya d'Alger / CNA"                           
-#> [58] "VERITAL/ Direction Générale"                                                
-#> [59] "Wilaya d'Alger"                                                             
-#> [60] "Officine Abeille"
+#>  [1] "Dar El Hikma"                                                                                                                  
+#>  [2] "Trans Canal Centre / Khemis El Khechna"                                                                                        
+#>  [3] "Direction Régionale Centre / Ex Trans Canal Centre"                                                                            
+#>  [4] "Egt Sidi Fredj / Club Azur Plage"                                                                                              
+#>  [5] "EGT Zeralda / Entreprise de Gestion Touristique de Zeralda"                                                                    
+#>  [6] "SPE / Sociéte Algérienne de Production d’Electricité"                                                                          
+#>  [7] "GRTG / Société Algérienne de Gestion du Réseau de Transport  de Gaz"                                                           
+#>  [8] "GRTE  / Société Algérienne de Gestion du Réseau de Transport de Electricité"                                                   
+#>  [9] "Clef du Sud / Miftah El Djanoub"                                                                                               
+#> [10] "Adrien.Dz"                                                                                                                     
+#> [11] "MPV"                                                                                                                           
+#> [12] "SCAL / La Société des Ciments de l'Algérois"                                                                                   
+#> [13] "EVSM / Entreprise de Viabilisation de Sidi Moussa"                                                                             
+#> [14] "Chambre d'Agriculture de la Wilaya d'Alger / CNA"                                                                              
+#> [15] "VERITAL/ Direction Générale"                                                                                                   
+#> [16] "Wilaya d'Alger"                                                                                                                
+#> [17] "Officine Abeille"                                                                                                              
+#> [18] "Twingle"                                                                                                                       
+#> [19] "UGTA / Union Générale des Travailleurs Algériens"                                                                              
+#> [20] "ENEFEP / Etablissement National Des Equipements Techniques Et Pédagogiques de la Formation et de L’enseignement Professionnels"
+#> [21] "Dar El Hikma"                                                                                                                  
+#> [22] "Trans Canal Centre / Khemis El Khechna"                                                                                        
+#> [23] "Direction Régionale Centre / Ex Trans Canal Centre"                                                                            
+#> [24] "Egt Sidi Fredj / Club Azur Plage"                                                                                              
+#> [25] "EGT Zeralda / Entreprise de Gestion Touristique de Zeralda"                                                                    
+#> [26] "SPE / Sociéte Algérienne de Production d’Electricité"                                                                          
+#> [27] "GRTG / Société Algérienne de Gestion du Réseau de Transport  de Gaz"                                                           
+#> [28] "GRTE  / Société Algérienne de Gestion du Réseau de Transport de Electricité"                                                   
+#> [29] "Clef du Sud / Miftah El Djanoub"                                                                                               
+#> [30] "Adrien.Dz"                                                                                                                     
+#> [31] "MPV"                                                                                                                           
+#> [32] "SCAL / La Société des Ciments de l'Algérois"                                                                                   
+#> [33] "EVSM / Entreprise de Viabilisation de Sidi Moussa"                                                                             
+#> [34] "Chambre d'Agriculture de la Wilaya d'Alger / CNA"                                                                              
+#> [35] "VERITAL/ Direction Générale"                                                                                                   
+#> [36] "Wilaya d'Alger"                                                                                                                
+#> [37] "Officine Abeille"                                                                                                              
+#> [38] "Twingle"                                                                                                                       
+#> [39] "UGTA / Union Générale des Travailleurs Algériens"                                                                              
+#> [40] "ENEFEP / Etablissement National Des Equipements Techniques Et Pédagogiques de la Formation et de L’enseignement Professionnels"
+#> [41] "Dar El Hikma"                                                                                                                  
+#> [42] "Trans Canal Centre / Khemis El Khechna"                                                                                        
+#> [43] "Direction Régionale Centre / Ex Trans Canal Centre"                                                                            
+#> [44] "Egt Sidi Fredj / Club Azur Plage"                                                                                              
+#> [45] "EGT Zeralda / Entreprise de Gestion Touristique de Zeralda"                                                                    
+#> [46] "SPE / Sociéte Algérienne de Production d’Electricité"                                                                          
+#> [47] "GRTG / Société Algérienne de Gestion du Réseau de Transport  de Gaz"                                                           
+#> [48] "GRTE  / Société Algérienne de Gestion du Réseau de Transport de Electricité"                                                   
+#> [49] "Clef du Sud / Miftah El Djanoub"                                                                                               
+#> [50] "Adrien.Dz"                                                                                                                     
+#> [51] "MPV"                                                                                                                           
+#> [52] "SCAL / La Société des Ciments de l'Algérois"                                                                                   
+#> [53] "EVSM / Entreprise de Viabilisation de Sidi Moussa"                                                                             
+#> [54] "Chambre d'Agriculture de la Wilaya d'Alger / CNA"                                                                              
+#> [55] "VERITAL/ Direction Générale"                                                                                                   
+#> [56] "Wilaya d'Alger"                                                                                                                
+#> [57] "Officine Abeille"                                                                                                              
+#> [58] "Twingle"                                                                                                                       
+#> [59] "UGTA / Union Générale des Travailleurs Algériens"                                                                              
+#> [60] "ENEFEP / Etablissement National Des Equipements Techniques Et Pédagogiques de la Formation et de L’enseignement Professionnels"
 ```
 
 ## tidy\_scrap()
 
-If you want to extract information in the form of a dataframe, you can
-use the `tidy_scrap()` function which returns a tidy dataframe according
-to the arguments that you introduce. The function takes four arguments:
+If you want to extract a dataframe from a web page, you can use the
+`tidy_scrap()` function which returns a tidy dataframe according to the
+arguments that you introduce. The function takes four arguments:
 
-  - **link** : which is the link of the website you’re interested for;
-  - **nodes**: which is a vector of CSS elements that you want to
-    extract. These elements will form the columns of your dataframe;
+  - **link** : the link of the website you’re interested for
+  - **nodes**: a vector of CSS elements that you want to extract. These
+    elements will form the columns of your dataframe
   - **colnames**: this argument represents the vector of names you want
     to assign to your columns. Note that you should respect the same
-    order as within the **nodes** vector;
+    order as within the **nodes** vector
   - **clean**: if true the function will clean the tibble’s columns.
 
 ### Example
 
 We’ll work on the famous [IMDb website](https://www.imdb.com/). Let’s
-say you need a dataframe composed of:
+say we need a dataframe composed of:
 
-  - The title of the 50 best ranked movies of all time;
-  - Their release year;
-  - Their rating.
+  - The title of the 50 best ranked movies of all time
+  - Their release year
+  - Their rating
 
-You we’ll need to use the `tidy_scrap()` function as follows:
+We will need to use the `tidy_scrap()` function as follows:
 
 ``` r
 
@@ -183,7 +195,7 @@ tidy_scrap(my_link, my_nodes, colnames = names)
 #> # ... with 40 more rows
 ```
 
-Note that all columns will be of *character* class. You’ll need to
+Note that all columns will be of *character* class. you’ll have to
 convert them according to your needs. Finally, I appreciate any
 feedback, please reach out or DM at
-[ihaddadenfodil](https://twitter.com/moh_fodil).
+[ihaddaden\_moh\_fodil](https://twitter.com/moh_fodil).
