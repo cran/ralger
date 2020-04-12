@@ -1,13 +1,14 @@
-# scraping an HTML tablefrom a website
+# scraping an HTML table from a website
 
 #' HTML table scraping
 #'
-#' @description This function is used to scrap an html table from a website.
+#' @description This function is used to scrape an html table from a website.
 #'
-#' @param link the link of the webpage containing the table to scrap
-
-#' @param askRobot logical. Should the function ask the robots.txt if we're allowed or not to scrap the web page ? Default is FALSE.
-#' @return a tidy dataframe.
+#' @param link the link of the web page containing the table to scrape
+#' @param choose an integer indicating which table to scrape
+#' @param header do you want the first line to be the leader (default to TRUE)
+#' @param askRobot logical. Should the function ask the robots.txt if we're allowed or not to scrape the web page ? Default is FALSE.
+#' @return a data frame object.
 #' @examples \donttest{
 #' # Extracting premier ligue 2019/2020 top scorers
 #'
@@ -25,7 +26,7 @@
 
 
 
-table_scrap <- function(link, askRobot = FALSE){
+table_scrap <- function(link, choose = 1, header = T, askRobot = FALSE){
 
 
   if(askRobot){
@@ -45,8 +46,8 @@ table_scrap <- function(link, askRobot = FALSE){
 
   table <- link %>%
     read_html() %>%
-    html_table() %>%
-    purrr::pluck(1)
+    html_table(header) %>%
+    purrr::pluck(choose)
 
   return(table)
 

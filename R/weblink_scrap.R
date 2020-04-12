@@ -1,12 +1,12 @@
-# scraping a tidy dataframe from a website
+# scraping web links from a website
 
-#' Website Tidy scraping
+#' Website web links scraping
 #'
-#' @description This function is used to scrap a tibble from a website.
+#' @description This function is used to scrape web links from a website.
 #'
-#' @param link the link of the webpage to scrap
-#' @param contain filter the web links according the character string provided. Particulary useful when extracting PDF or xlsx links (works also with regex)
-#' @param askRobot logical. Should the function ask the robots.txt if we're allowed or not to scrap the web page ? Default is FALSE.
+#' @param link the link of the web page to scrape
+#' @param contain filter the web links according to the character string provided.
+#' @param askRobot logical. Should the function ask the robots.txt if we're allowed or not to scrape the web page ? Default is FALSE.
 #' @return a character vector.
 #' @examples \donttest{
 #' # Extracting the web links within the World Bank research and publications page

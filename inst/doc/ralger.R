@@ -1,4 +1,4 @@
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(ralger)
 
 data <- scrap(
@@ -9,7 +9,7 @@ data <- scrap(
 data
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 
 link <- "https://www.goldenglobes.com/winners-nominees/best-performance-actress-motion-picture-drama?page=" # Mind the change in the link structure "page=" 
 
@@ -20,7 +20,7 @@ data_all <- scrap(paste(link, 0:20, sep = ""), node)
 length(data_all)
 
 
-## ----message=FALSE, warning=FALSE----------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 
 links <- paste(link, 0:20, sep = "") # The links required to extract the 350 observations
 
