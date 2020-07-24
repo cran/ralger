@@ -14,6 +14,22 @@
 
 <title>ralger</title>
 
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -328,8 +344,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <pre><code>##  [1] &quot;Renée Zellweger&quot;    &quot;Cynthia Erivo&quot;      &quot;Scarlett Johansson&quot;
 ##  [4] &quot;Saoirse Ronan&quot;      &quot;Charlize Theron&quot;    &quot;Glenn Close&quot;       
 ##  [7] &quot;Lady Gaga&quot;          &quot;Nicole Kidman&quot;      &quot;Melissa McCarthy&quot;  
-## [10] &quot;Rosamund Pike&quot;      &quot;Frances McDormand&quot;  &quot;Meryl Streep&quot;      
-## [13] &quot;Michelle Williams&quot;  &quot;Jessica Chastain&quot;   &quot;Sally Hawkins&quot;     
+## [10] &quot;Rosamund Pike&quot;      &quot;Frances McDormand&quot;  &quot;Jessica Chastain&quot;  
+## [13] &quot;Sally Hawkins&quot;      &quot;Meryl Streep&quot;       &quot;Michelle Williams&quot; 
 ## [16] &quot;Isabelle Huppert&quot;   &quot;Amy Adams&quot;          &quot;Jessica Chastain&quot;  
 ## [19] &quot;Ruth Negga&quot;         &quot;Natalie Portman&quot;</code></pre>
 <p>Pretty simple right ? I hope so. Anyway, the problem here is that the main page displays only 20 nominees, from 2017 to 2020. What if we wanted to extract all nominees in history ? Indeed, you’re right, we’d have to scroll multiple pages (20 to be exact) across the website. In this context, we need to use <code>paste()</code> in conjunction with <code>scrap()</code> as follows:</p>
@@ -367,10 +383,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ##    Actress            Movie                   
 ##    &lt;chr&gt;              &lt;chr&gt;                   
 ##  1 Renée Zellweger    Judy                    
-##  2 Cynthia Erivo      Harriet                 
-##  3 Scarlett Johansson Marriage Story          
-##  4 Saoirse Ronan      Little Women            
-##  5 Charlize Theron    Bombshell               
+##  2 Scarlett Johansson Marriage Story          
+##  3 Saoirse Ronan      Little Women            
+##  4 Charlize Theron    Bombshell               
+##  5 Cynthia Erivo      Harriet                 
 ##  6 Glenn Close        Wife, The               
 ##  7 Lady Gaga          Star Is Born, A (2018)  
 ##  8 Nicole Kidman      Destroyer               
