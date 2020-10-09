@@ -12,8 +12,21 @@
 
 
 
-<title>ralger</title>
+<title>Getting_Started</title>
 
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 <script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
 // v0.0.1
 // Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
@@ -34,19 +47,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -66,7 +78,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -315,7 +327,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">ralger</h1>
+<h1 class="title toc-ignore">Getting_Started</h1>
 
 
 
@@ -341,13 +353,13 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb1-6"><a href="#cb1-6"></a>)</span>
 <span id="cb1-7"><a href="#cb1-7"></a></span>
 <span id="cb1-8"><a href="#cb1-8"></a>data</span></code></pre></div>
-<pre><code>##  [1] &quot;Renée Zellweger&quot;    &quot;Cynthia Erivo&quot;      &quot;Scarlett Johansson&quot;
-##  [4] &quot;Saoirse Ronan&quot;      &quot;Charlize Theron&quot;    &quot;Glenn Close&quot;       
+<pre><code>##  [1] &quot;Renée Zellweger&quot;    &quot;Scarlett Johansson&quot; &quot;Saoirse Ronan&quot;     
+##  [4] &quot;Charlize Theron&quot;    &quot;Cynthia Erivo&quot;      &quot;Glenn Close&quot;       
 ##  [7] &quot;Lady Gaga&quot;          &quot;Nicole Kidman&quot;      &quot;Melissa McCarthy&quot;  
-## [10] &quot;Rosamund Pike&quot;      &quot;Frances McDormand&quot;  &quot;Jessica Chastain&quot;  
-## [13] &quot;Sally Hawkins&quot;      &quot;Meryl Streep&quot;       &quot;Michelle Williams&quot; 
-## [16] &quot;Isabelle Huppert&quot;   &quot;Amy Adams&quot;          &quot;Jessica Chastain&quot;  
-## [19] &quot;Ruth Negga&quot;         &quot;Natalie Portman&quot;</code></pre>
+## [10] &quot;Rosamund Pike&quot;      &quot;Frances McDormand&quot;  &quot;Sally Hawkins&quot;     
+## [13] &quot;Meryl Streep&quot;       &quot;Michelle Williams&quot;  &quot;Jessica Chastain&quot;  
+## [16] &quot;Isabelle Huppert&quot;   &quot;France&quot;             &quot;Amy Adams&quot;         
+## [19] &quot;Jessica Chastain&quot;   &quot;Ruth Negga&quot;         &quot;Natalie Portman&quot;</code></pre>
 <p>Pretty simple right ? I hope so. Anyway, the problem here is that the main page displays only 20 nominees, from 2017 to 2020. What if we wanted to extract all nominees in history ? Indeed, you’re right, we’d have to scroll multiple pages (20 to be exact) across the website. In this context, we need to use <code>paste()</code> in conjunction with <code>scrap()</code> as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>link &lt;-<span class="st"> &quot;https://www.goldenglobes.com/winners-nominees/best-performance-actress-motion-picture-drama?page=&quot;</span> <span class="co"># Mind the change in the link structure &quot;page=&quot; </span></span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
@@ -356,7 +368,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb3-5"><a href="#cb3-5"></a>data_all &lt;-<span class="st"> </span><span class="kw">scrap</span>(<span class="kw">paste</span>(link, <span class="dv">0</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>), node)</span>
 <span id="cb3-6"><a href="#cb3-6"></a></span>
 <span id="cb3-7"><a href="#cb3-7"></a><span class="kw">length</span>(data_all)</span></code></pre></div>
-<pre><code>## [1] 349</code></pre>
+<pre><code>## [1] 360</code></pre>
 <p>And here we’re we have our all time nominees !!!</p>
 <hr />
 </div>
@@ -383,15 +395,15 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ##    Actress            Movie                   
 ##    &lt;chr&gt;              &lt;chr&gt;                   
 ##  1 Renée Zellweger    Judy                    
-##  2 Scarlett Johansson Marriage Story          
-##  3 Saoirse Ronan      Little Women            
-##  4 Charlize Theron    Bombshell               
-##  5 Cynthia Erivo      Harriet                 
+##  2 Cynthia Erivo      Harriet                 
+##  3 Scarlett Johansson Marriage Story          
+##  4 Saoirse Ronan      Little Women            
+##  5 Charlize Theron    Bombshell               
 ##  6 Glenn Close        Wife, The               
-##  7 Lady Gaga          Star Is Born, A (2018)  
-##  8 Nicole Kidman      Destroyer               
-##  9 Melissa McCarthy   Can You Ever Forgive Me?
-## 10 Rosamund Pike      Private War, A</code></pre>
+##  7 Rosamund Pike      Private War, A          
+##  8 Lady Gaga          Star Is Born, A (2018)  
+##  9 Nicole Kidman      Destroyer               
+## 10 Melissa McCarthy   Can You Ever Forgive Me?</code></pre>
 <p>If you have any feedback don’t hesitate to make a pull request or reach out on <a href="https://twitter.com/moh_fodil">Twitter</a>.</p>
 </div>
 

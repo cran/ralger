@@ -1,4 +1,9 @@
+# ralger 2.1.0
+
 # ralger 2.0.1
+
+1- Thanks to Ezekiel (ctb) I've added an argument to the table_scrap() function which is fill (the argument is from the rvest package), the user has now the ability to set fill = TRUE when dealing with tables with inconsistent number of columns/rows. 
+
 
 # ralger 2.0.0
 

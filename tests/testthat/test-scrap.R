@@ -16,7 +16,33 @@ expect_equal(
       }))
 
     )
+
+
+  expect_vector(
+
+    scrap(
+      link = "https://www.imdb.com/chart/top/",
+      node = ".titleColumn a"
+    )
+  )
+
+  expect_type(
+
+    scrap(
+      link = "https://www.imdb.com/chart/top/",
+      node = ".titleColumn a"
+    ),
+
+    "character"
+
+  )
+
+
+
+
 })
+
+
 
 
 

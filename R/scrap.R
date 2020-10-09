@@ -27,51 +27,45 @@
 #' @importFrom crayon green
 #' @importFrom crayon bgRed
 
-scrap <- function(link, node, clean = FALSE, askRobot = FALSE){
+scrap <- function(link,
+                  node,
+                  clean = FALSE,
+                  askRobot = FALSE) {
 
+  if (askRobot) {
 
-  if(askRobot){
-
-    if(paths_allowed(link) == TRUE){
-
-      message(green("It's ok you're allowed to scrap this web page"))
+    if (paths_allowed(link) == TRUE) {
+      message(green("the robot.txt doesn't prohibit scraping this web page"))
 
     } else {
-
-      message(bgRed("WARNING: you're not allowed to scrap this web page"))
+      message(bgRed(
+        "WARNING: the robot.txt doesn't allow scraping this web page"
+      ))
 
     }
 
 
   }
 
-
-
-
-
-
   data <- lapply(link,
-    function(url){
-      url %>% read_html() %>%
-        html_nodes(node) %>%
-        html_text()
+                 function(url) {
+                   url %>% read_html() %>%
+                     html_nodes(node) %>%
+                     html_text()
+                 })
+
+  if (!clean)
+    return({
+      unlist(data)
     })
 
-  if (!clean) return({unlist(data)})
-
-  if (clean){
-
+  if (clean) {
     data_clean <- unlist(data) %>%
-      str_replace_all(c("\n" = " ","\r" = " ")) %>%
+      str_replace_all(c("\n" = " ", "\r" = " ")) %>%
       str_trim()
     return(data_clean)
 
   }
 
 
-
-
 }
-
-
-

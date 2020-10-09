@@ -4,12 +4,14 @@
 \alias{titles_scrap}
 \title{Website title scraping}
 \usage{
-titles_scrap(link, contain = NULL, askRobot = FALSE)
+titles_scrap(link, contain = NULL, case_sensitive = FALSE, askRobot = FALSE)
 }
 \arguments{
 \item{link}{the link of the web page to scrape}
 
-\item{contain}{filter the titles according to the character string provided.}
+\item{contain}{filter the titles according to a character string provided.}
+
+\item{case_sensitive}{logical. Should the contain argument be case sensitive ? defaults to FALSE}
 
 \item{askRobot}{logical. Should the function ask the robots.txt if we're allowed or not to scrape the web page ? Default is FALSE}
 }
@@ -17,7 +19,7 @@ titles_scrap(link, contain = NULL, askRobot = FALSE)
 a character vector
 }
 \description{
-This function is used to scrape titles from a website. Useful for scraping daily electronic newspapers' titles.
+This function is used to scrape titles (h1, h2 & h3 html tags) from a website. Useful for scraping daily electronic newspapers' titles.
 }
 \examples{
 \donttest{
