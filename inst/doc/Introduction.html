@@ -331,14 +331,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<p>ralger is a package that aims to facilitate to the maximum web scraping in R. For scraping some data, you only need two elements, the <strong>link</strong> of the web page and the <strong>html</strong> or <strong>css</strong> node that references the needed information. Don’t panic, you don’t have to spend hours learning html and css. You can just use the <strong>SelectorGadget</strong> chrome extension. You can check out this <a href="https://www.youtube.com/watch?v=oqNTfWrGdbk">tutorial</a> for more information.</p>
+<p><code>ralger</code> is a package that aims to facilitate to the maximum web scraping in R. For scraping some data, you only need two elements, the <strong>link</strong> of the web page and the <strong>HTML</strong> or <strong>CSS</strong> node that references the needed information. Don’t panic, you don’t have to spend hours learning HTML and CSS. You can just use the <strong>SelectorGadget</strong> chrome extension. You can check out this <a href="https://www.youtube.com/watch?v=oqNTfWrGdbk">tutorial</a> for more information.</p>
 <hr />
 <div id="scrap" class="section level1">
 <h1>scrap()</h1>
-<p>Let’s dive into an example ! Suppose we want to extract all Golden Globes Best Actress Nominees (including the winner). In ralger you need only two elements:</p>
+<p>Let’s dive into an example ! Suppose we want to extract all Golden Globes Best Actress Nominees (including the winner). In <code>ralger</code> you need only two elements:</p>
 <ul>
-<li><p>The link: <a href="https://www.goldenglobes.com/winners-nominees/best-performance-actress-motion-picture-drama" class="uri">https://www.goldenglobes.com/winners-nominees/best-performance-actress-motion-picture-drama</a></p></li>
-<li><p>The node: .primary-nominee a</p></li>
+<li><p>The link: <code>https://www.goldenglobes.com/winners-nominees/best-performance-actress-motion-picture-drama</code></p></li>
+<li><p>The node: <code>.primary-nominee a</code></p></li>
 </ul>
 <p>And that’s it, we’re ready to scrap !</p>
 <div class="figure">
@@ -400,10 +400,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 ##  4 Saoirse Ronan      Little Women            
 ##  5 Charlize Theron    Bombshell               
 ##  6 Glenn Close        Wife, The               
-##  7 Rosamund Pike      Private War, A          
-##  8 Lady Gaga          Star Is Born, A (2018)  
-##  9 Nicole Kidman      Destroyer               
-## 10 Melissa McCarthy   Can You Ever Forgive Me?</code></pre>
+##  7 Lady Gaga          Star Is Born, A (2018)  
+##  8 Nicole Kidman      Destroyer               
+##  9 Melissa McCarthy   Can You Ever Forgive Me?
+## 10 Rosamund Pike      Private War, A</code></pre>
 <p>If you have any feedback don’t hesitate to make a pull request or reach out on <a href="https://twitter.com/moh_fodil">Twitter</a>.</p>
 </div>
 
