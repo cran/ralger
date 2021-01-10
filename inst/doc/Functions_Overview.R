@@ -11,20 +11,14 @@ knitr::opts_chunk$set(
 ## ----example------------------------------------------------------------------
 library(ralger)
 
-my_link <- "http://elmouchir.caci.dz/search_results.php?keyword=&category=&location=Alger&submit=Trouver"
+my_link <- "http://www.shanghairanking.com/ARWU2020.html"
 
-my_node <- ".listing_default" # The CSS class, we recommend SelectorGadget
+my_node <- "#UniversityRanking a" # The class ID , we recommend SelectorGadget
 
-scrap(link = my_link, node = my_node)
+best_uni <- scrap(link = my_link, node = my_node)
 
+head(best_uni, 10)
 
-
-## ----example2-----------------------------------------------------------------
-my_link <- "http://elmouchir.caci.dz/search_results.php?keyword=&category=&location=Alger&submit=Trouver&page=" 
-
-my_node <- ".listing_default"
-
-scrap(link = paste0(my_link, 0:2), node = my_node)
 
 
 ## -----------------------------------------------------------------------------
@@ -63,7 +57,7 @@ titles_scrap(link = "https://www.nytimes.com/")
 
 ## -----------------------------------------------------------------------------
 
-titles_scrap(link = "https://www.nytimes.com/", contain = "York", case_sensitive = FALSE)
+titles_scrap(link = "https://www.nytimes.com/", contain = "TrUMp", case_sensitive = FALSE)
 
 
 
@@ -85,4 +79,18 @@ weblink_scrap(link = "https://www.worldbank.org/en/access-to-information/reports
               case_sensitive = FALSE)
 
 
+
+## -----------------------------------------------------------------------------
+
+images_preview(link = "https://rstudio.com/")
+
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  
+#  # Suppose we're in a project which has a folder called my_images:
+#  
+#  images_scrap(link = "https://rstudio.com/",
+#               imgpath = here::here("my_images"),
+#               extn = "png") # without the .
+#  
 

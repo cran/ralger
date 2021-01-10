@@ -26,11 +26,29 @@
 #' @importFrom crayon green
 #' @importFrom crayon bgRed
 #' @importFrom curl has_internet
+#' @importFrom stringi stri_remove_empty
+#'
 
 scrap <- function(link,
                   node,
                   clean = FALSE,
                   askRobot = FALSE) {
+
+
+  # returns an error if either link or node are not provided
+  if(missing(link) || missing(node)) {
+
+    stop("'link' and 'node' are mandatory parameters")
+
+  }
+
+  # returns an error if link and node are not character strings
+  if(!is.character(link) || !is.character(node)){
+
+    stop("'link' and 'node' parameters must be provided as character strings")
+
+  }
+
 
 ###################### Ask robot related ##################################################
   if (askRobot) {
@@ -59,14 +77,13 @@ scrap <- function(link,
                      html_text()
                  })
 
-
         if(!clean){
 
-        return(unlist(data))
+        return(stri_remove_empty(unlist(data)))
 
         } else {
 
-        unlist(data) %>%
+        stri_remove_empty(unlist(data)) %>%
         str_replace_all(c("\n" = " ", "\r" = " ", "\t" = " ")) %>%
         str_trim()
 
@@ -78,9 +95,7 @@ scrap <- function(link,
 
       if(!has_internet()){
 
-        message("Please check your internet connexion: ")
-
-        message(cond)
+        message(paste0("Please check your internet connexion: ", cond))
 
         return(NA)
 
@@ -88,12 +103,20 @@ scrap <- function(link,
 
           message(paste0("The URL doesn't seem to be a valid one: ", link))
 
-          message("Here the original error message: ")
-
-          message(cond)
+          message(paste0("Here the original error message: ", cond))
 
           return(NA)
-      }})
+
+      } else {
+
+        message(paste0("Undefined Error: ", cond))
+
+        return(NA)
+
+      }
+
+
+      })
 
 
 }

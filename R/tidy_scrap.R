@@ -40,11 +40,29 @@ tidy_scrap <- function(link,
                        askRobot = FALSE) {
 
 
+  if(missing(link) ||
+     missing(nodes)|| missing(colnames)) {
 
+    stop("'link', 'nodes' and 'colnames' parameters are mandatory")
+
+  }
+
+  if(!is.character(link) ||
+     !is.character(nodes)||
+     !is.character(colnames)) {
+
+    stop("'link', 'nodes' and 'colnames' parameters must be
+         provided as strings")
+
+  }
+
+
+  if (length(nodes) != length(colnames)) {
+
+    stop("nodes and colnames lengths do not match")
+
+  }
 ######################### Ask Robot part #####################################################
-
-    if (length(nodes) != length(colnames))
-      stop("nodes and colnames lengths do not match")
 
     if (askRobot) {
       if (paths_allowed(link) == TRUE) {
@@ -85,16 +103,14 @@ result %>%
         mutate_all(str_trim)
 
 }
-      
-}, 
+
+},
 
 error = function(cond){
 
       if(!has_internet()){
 
-        message("Please check your internet connexion: ")
-
-        message(cond)
+        message(paste0("Please check your internet connexion: ", cond))
 
         return(NA)
 
@@ -102,13 +118,18 @@ error = function(cond){
 
           message(paste0("The URL doesn't seem to be a valid one: ", link))
 
-          message("Here the original error message: ")
-
-          message(cond)
+          message(paste0("Here the original error message: ", cond))
 
           return(NA)
+
+      } else {
+
+        message(paste0("Undefined Error: ", cond))
+
+        return(NA)
       }
+
       }
-      )
+) # tryCatch end
 
   }

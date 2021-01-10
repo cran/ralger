@@ -13,10 +13,12 @@ downloads](https://cranlogs.r-pkg.org/badges/ralger)](https://cran.r-project.org
 [![metacran
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/ralger)](https://cran.r-project.org/package=ralger)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Travis build
-status](https://travis-ci.com/feddelegrand7/ralger.svg?branch=master)](https://travis-ci.com/feddelegrand7/ralger)
 [![R
 badge](https://img.shields.io/badge/Build%20with-♥%20and%20R-blue)](https://github.com/feddelegrand7/ralger)
+[![R
+badge](https://img.shields.io/badge/-Sponsor-brightgreen)](https://www.buymeacoffee.com/Fodil)
+[![R build
+status](https://github.com/feddelegrand7/ralger/workflows/R-CMD-check/badge.svg)](https://github.com/feddelegrand7/ralger/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/feddelegrand7/ralger/branch/master/graph/badge.svg)](https://codecov.io/gh/feddelegrand7/ralger?branch=master)
 <!-- badges: end -->
@@ -42,120 +44,42 @@ or you can install the development version from
 devtools::install_github("feddelegrand7/ralger")
 ```
 
-## scrap()
+## `scrap()`
 
-This is an example which shows how to extract firms’ denomination from
-the website of the [Algerian Chamber of Commerce and
-Industry](http://elmouchir.caci.dz) (CACI). For simplicity, we’ll focus
-on firms operating within the capital (Algiers).
+This is an example which shows how to extract [top ranked universities’
+names](http://www.shanghairanking.com/ARWU2020.html) according to the
+ShanghaiRanking Consultancy:
 
 ``` r
 library(ralger)
 
-my_link <- "http://elmouchir.caci.dz/search_results.php?keyword=&category=&location=Alger&submit=Trouver"
+my_link <- "http://www.shanghairanking.com/ARWU2020.html"
 
-my_node <- ".listing_default" # The CSS class, we recommend SelectorGadget
+my_node <- "#UniversityRanking a" # The class ID , we recommend SelectorGadget
 
-scrap(link = my_link, node = my_node)
-#>  [1] "Adjerid Hanifa"                                                               
-#>  [2] "Dar Chamila"                                                                  
-#>  [3] "BNP Paribas / Agences Alger Bordj El Kiffan"                                  
-#>  [4] "TVA / Touring Voyages Algérie Centre / Zighoud Youcef"                        
-#>  [5] "SAMRIA AUTO / Salon Algerian du Materiel Roulant et de L'industrie Automobile"
-#>  [6] "YOUKAIS"                                                                      
-#>  [7] "EDIMETAL"                                                                     
-#>  [8] "SYRIAN AIR LINES"                                                             
-#>  [9] "Turkish Airlines / Direction Générale"                                        
-#> [10] "Aigle Azur / Agence Didouche Mourad"                                          
-#> [11] "British Airways"                                                              
-#> [12] "Cabinet Ammiche Amer"                                                         
-#> [13] "VERITEX"                                                                      
-#> [14] "Kermiche Partener"                                                            
-#> [15] "Marine Soft"                                                                  
-#> [16] "PROGOS"                                                                       
-#> [17] "Ambassade du Royaume d'Arabie Saoudite"                                       
-#> [18] "Ambassade de la République d'Argentine"                                       
-#> [19] "Ambassade du Burkina Faso"                                                    
-#> [20] "Ambassade du Canada"
-```
+best_uni <- scrap(link = my_link, node = my_node)
 
-If you want to scrap multiple list pages, just use `scrap()` in
-conjunction with `paste0()`. Suppose, we want to extract the above
-information from the first 3 pages (starts from 0):
-
-``` r
-my_link <- "http://elmouchir.caci.dz/search_results.php?keyword=&category=&location=Alger&submit=Trouver&page=" 
-
-my_node <- ".listing_default"
-
-scrap(link = paste0(my_link, 0:2), node = my_node)
-#>  [1] "SCAL / La Société des Ciments de l'Algérois"                                                                                   
-#>  [2] "EVSM / Entreprise de Viabilisation de Sidi Moussa"                                                                             
-#>  [3] "Chambre d'Agriculture de la Wilaya d'Alger / CNA"                                                                              
-#>  [4] "VERITAL/ Direction Générale"                                                                                                   
-#>  [5] "Wilaya d'Alger"                                                                                                                
-#>  [6] "Officine Abeille"                                                                                                              
-#>  [7] "Twingle"                                                                                                                       
-#>  [8] "FCM"                                                                                                                           
-#>  [9] "UGTA / Union Générale des Travailleurs Algériens"                                                                              
-#> [10] "ENEFEP / Etablissement National Des Equipements Techniques Et Pédagogiques de la Formation et de L’enseignement Professionnels"
-#> [11] "CCIM / Chambre de Commerce et d'Industrie de Mezghenna"                                                                        
-#> [12] "Conseil Constitutionnel"                                                                                                       
-#> [13] "Ambassade de la République de Serbie"                                                                                          
-#> [14] "Conseil de la Nation"                                                                                                          
-#> [15] "Radio El Bahdja"                                                                                                               
-#> [16] "Radio Mitidja"                                                                                                                 
-#> [17] "Mina Sport"                                                                                                                    
-#> [18] "Geete Services Industries"                                                                                                     
-#> [19] "Ambassade De Pologne"                                                                                                          
-#> [20] "LHC/ Laboratoire de l'Habitat & de Construction Alger"                                                                         
-#> [21] "Adjerid Hanifa"                                                                                                                
-#> [22] "Dar Chamila"                                                                                                                   
-#> [23] "BNP Paribas / Agences Alger Bordj El Kiffan"                                                                                   
-#> [24] "TVA / Touring Voyages Algérie Centre / Zighoud Youcef"                                                                         
-#> [25] "SAMRIA AUTO / Salon Algerian du Materiel Roulant et de L'industrie Automobile"                                                 
-#> [26] "YOUKAIS"                                                                                                                       
-#> [27] "EDIMETAL"                                                                                                                      
-#> [28] "SYRIAN AIR LINES"                                                                                                              
-#> [29] "Turkish Airlines / Direction Générale"                                                                                         
-#> [30] "Aigle Azur / Agence Didouche Mourad"                                                                                           
-#> [31] "British Airways"                                                                                                               
-#> [32] "Cabinet Ammiche Amer"                                                                                                          
-#> [33] "VERITEX"                                                                                                                       
-#> [34] "Kermiche Partener"                                                                                                             
-#> [35] "Marine Soft"                                                                                                                   
-#> [36] "PROGOS"                                                                                                                        
-#> [37] "Ambassade du Royaume d'Arabie Saoudite"                                                                                        
-#> [38] "Ambassade de la République d'Argentine"                                                                                        
-#> [39] "Ambassade du Burkina Faso"                                                                                                     
-#> [40] "Ambassade du Canada"                                                                                                           
-#> [41] "Ambassade de la République de Corée"                                                                                           
-#> [42] "Ambassade de la République de Côte d'Ivoire"                                                                                   
-#> [43] "Ambassade des Emirats Arabes Unis"                                                                                             
-#> [44] "Ambassade du Royaume d'Espagne"                                                                                                
-#> [45] "Ambassade des Etats Unis d’Amérique"                                                                                           
-#> [46] "Ambassade de la République de Guinée Bissau"                                                                                   
-#> [47] "Ambassade du Royaume Hachémite de Jordanie"                                                                                    
-#> [48] "ONDA / Office National des Droits d'Auteurs"                                                                                   
-#> [49] "Ambassade de la République du Mali"                                                                                            
-#> [50] "Ambassade du Royaume du Maroc"                                                                                                 
-#> [51] "Ambassade de la République du Niger"                                                                                           
-#> [52] "Ambassade de la République Islamique du Pakistan"                                                                              
-#> [53] "RPL / Réseaux Poids Lourds"                                                                                                    
-#> [54] "Ambassade de l'Etat de Palestine"                                                                                              
-#> [55] "Ambassade du Royaume de Suède"                                                                                                 
-#> [56] "Ambassade de la République Yemenite"                                                                                           
-#> [57] "Ambassade de la République Démocratique du Congo"                                                                              
-#> [58] "Ambassade de la République Arabe Sahraouie Démocratique"                                                                       
-#> [59] "Ambassade de la République Fédérale du Nigeria"                                                                                
-#> [60] "Ambassade du Sultanat d'Oman"
+head(best_uni, 10)
+#>  [1] "Harvard University"                         
+#>  [2] "Stanford University"                        
+#>  [3] "University of Cambridge"                    
+#>  [4] "Massachusetts Institute of Technology (MIT)"
+#>  [5] "University of California, Berkeley"         
+#>  [6] "Princeton University"                       
+#>  [7] "Columbia University"                        
+#>  [8] "California Institute of Technology"         
+#>  [9] "University of Oxford"                       
+#> [10] "University of Chicago"
 ```
 
 Thanks to the [robotstxt](https://github.com/ropensci/robotstxt), you
 can set `askRobot = T` to ask the `robots.txt` file if it’s permitted to
 scrape a specific web page.
 
-## table\_scrap()
+If you want to scrap multiple list pages, just use `scrap()` in
+conjunction with `paste0()`.
+
+## `table_scrap()`
 
 If you want to extract an **HTML Table**, you can use the
 `table_scrap()` function. Take a look at this
@@ -165,14 +89,13 @@ extract the HTML table as follows:
 
 ``` r
 
-
 data <- table_scrap(link ="https://www.boxofficemojo.com/chart/top_lifetime_gross/?area=XWW")
 
 head(data)
 #>   Rank                                      Title Lifetime Gross Year
 #> 1    1                          Avengers: Endgame $2,797,800,564 2019
 #> 2    2                                     Avatar $2,790,439,092 2009
-#> 3    3                                    Titanic $2,195,170,133 1997
+#> 3    3                                    Titanic $2,471,751,922 1997
 #> 4    4 Star Wars: Episode VII - The Force Awakens $2,068,454,133 2015
 #> 5    5                     Avengers: Infinity War $2,048,359,754 2018
 #> 6    6                             Jurassic World $1,670,401,444 2015
@@ -181,7 +104,7 @@ head(data)
 **When you deal with a web page that contains many HTML table you can
 use the `choose` argument to target a specific table**
 
-## tidy\_scrap()
+## `tidy_scrap()`
 
 Sometimes you’ll find some useful information on the internet that you
 want to extract in a tabular manner however these information are not
@@ -189,14 +112,14 @@ provided in an HTML format. In this context, you can use the
 `tidy_scrap()` function which returns a tidy data frame according to the
 arguments that you introduce. The function takes four arguments:
 
-  - **link** : the link of the website you’re interested for;
-  - **nodes**: a vector of CSS elements that you want to extract. These
+-   **link** : the link of the website you’re interested for;
+-   **nodes**: a vector of CSS elements that you want to extract. These
     elements will form the columns of your data frame;
-  - **colnames**: this argument represents the vector of names you want
+-   **colnames**: this argument represents the vector of names you want
     to assign to your columns. Note that you should respect the same
     order as within the **nodes** vector;
-  - **clean**: if true the function will clean the tibble’s columns;
-  - **askRobot**: ask the robots.txt file if it’s permitted to scrape
+-   **clean**: if true the function will clean the tibble’s columns;
+-   **askRobot**: ask the robots.txt file if it’s permitted to scrape
     the web page.
 
 ### Example
@@ -204,14 +127,13 @@ arguments that you introduce. The function takes four arguments:
 We’ll work on the famous [IMDb website](https://www.imdb.com/). Let’s
 say we need a data frame composed of:
 
-  - The title of the 50 best ranked movies of all time
-  - Their release year
-  - Their rating
+-   The title of the 50 best ranked movies of all time
+-   Their release year
+-   Their rating
 
 We will need to use the `tidy_scrap()` function as follows:
 
 ``` r
-
 my_link <- "https://www.imdb.com/search/title/?groups=top_250&sort=user_rating"
 
 my_nodes <- c(
@@ -231,10 +153,10 @@ tidy_scrap(link = my_link, nodes = my_nodes, colnames = names)
 #>  2 The Godfather                                 (1972) 9.2   
 #>  3 The Dark Knight                               (2008) 9.0   
 #>  4 The Godfather: Part II                        (1974) 9.0   
-#>  5 The Lord of the Rings: The Return of the King (2003) 8.9   
-#>  6 Pulp Fiction                                  (1994) 8.9   
-#>  7 Schindler's List                              (1993) 8.9   
-#>  8 12 Angry Men                                  (1957) 8.9   
+#>  5 12 Angry Men                                  (1957) 9.0   
+#>  6 The Lord of the Rings: The Return of the King (2003) 8.9   
+#>  7 Pulp Fiction                                  (1994) 8.9   
+#>  8 Schindler's List                              (1993) 8.9   
 #>  9 Inception                                     (2010) 8.8   
 #> 10 Fight Club                                    (1999) 8.8   
 #> # ... with 40 more rows
@@ -243,7 +165,7 @@ tidy_scrap(link = my_link, nodes = my_nodes, colnames = names)
 Note that all columns will be of *character* class. you’ll have to
 convert them according to your needs.
 
-## titles\_scrap()
+## `titles_scrap()`
 
 Using `titles_scrap()`, one can efficiently scrape titles which
 correspond to the *h1, h2 & h3* HTML tags.
@@ -255,82 +177,70 @@ easily extract the titles displayed within a specific web page :
 
 ``` r
 
-
 titles_scrap(link = "https://www.nytimes.com/")
-#>  [1] " Live Updates "                                                                                                                                                                                                                                                                                                                      
-#>  [2] " See full presidential results "                                                                                                                                                                                                                                                                                                     
-#>  [3] " Key States "                                                                                                                                                                                                                                                                                                                        
-#>  [4] "U.S. Surpasses 10 Million Coronavirus Cases"                                                                                                                                                                                                                                                                                         
-#>  [5] "An Explanation for Some Covid-19 Deaths May Not Be Holding Up"                                                                                                                                                                                                                                                                       
-#>  [6] "Alex Trebek, Longtime Host of ‘Jeopardy!,’ Dies at 80"                                                                                                                                                                                                                                                                               
-#>  [7] "O Captain, My ‘Jeopardy!’ Captain"                                                                                                                                                                                                                                                                                                   
-#>  [8] "“We have no idea what the show is going to be without him.” Fans mourned the loss of Alex Trebek."                                                                                                                                                                                                                                   
-#>  [9] "Making It Work"                                                                                                                                                                                                                                                                                                                      
-#> [10] "Yes, it is possible to buy a good used computer online. Here’s how."                                                                                                                                                                                                                                                                 
-#> [11] "If you’re on edge, try taking a controlled breath."                                                                                                                                                                                                                                                                                  
-#> [12] "The Weekender"                                                                                                                                                                                                                                                                                                                       
-#> [13] "Did you follow the news this week? Take our quiz."                                                                                                                                                                                                                                                                                   
-#> [14] "We Hereby Dump Trump"                                                                                                                                                                                                                                                                                                                
-#> [15] "What Alex Trebek Was Really Like"                                                                                                                                                                                                                                                                                                    
-#> [16] "Black Empowerment Outside the Headlines"                                                                                                                                                                                                                                                                                             
-#> [17] "The Human Experience Will Not Be Quantified"                                                                                                                                                                                                                                                                                         
-#> [18] "Elections Don’t Have to Be So Chaotic and Excruciating"                                                                                                                                                                                                                                                                              
-#> [19] "A Loving Chastisement for America"                                                                                                                                                                                                                                                                                                   
-#> [20] "Victory for Joe Biden, at Last"                                                                                                                                                                                                                                                                                                      
-#> [21] "Is There a Trumpism After Trump?"                                                                                                                                                                                                                                                                                                    
-#> [22] "A Black Hero in the Jim Crow Navy"                                                                                                                                                                                                                                                                                                   
-#> [23] "Biden Can’t Be F.D.R. He Could Still Be L.B.J."                                                                                                                                                                                                                                                                                      
-#> [24] "Why You Should Brave the ‘Bad’ Weather"                                                                                                                                                                                                                                                                                              
-#> [25] "When the Virus Came for the American Dream"                                                                                                                                                                                                                                                                                          
-#> [26] "Cardi B’s ‘WAP’ Proves Censorship Is Good Business"                                                                                                                                                                                                                                                                                  
-#> [27] "Review: ‘How to Make a Slave’ Offers Restless Thoughts About Race"                                                                                                                                                                                                                                                                   
-#> [28] "Site Index"                                                                                                                                                                                                                                                                                                                          
-#> [29] "Site Information Navigation"                                                                                                                                                                                                                                                                                                         
-#> [30] "As Biden Plans for Day 1, G.O.P. Navigates Trump’s Refusal to Concede"                                                                                                                                                                                                                                                               
-#> [31] "George W. Bush Congratulates Biden"                                                                                                                                                                                                                                                                                                  
-#> [32] ".css-11f6h48{margin-right:5px;}.css-11f6h48:hover{border-bottom:1px solid #e2e2e2;}Biden won her state, but her Uncle Sam protest costume isn’t going in storage..css-m7dmkp{font-family:nyt-franklin,helvetica,arial,sans-serif;color:#d0021b;font-weight:600;font-size:0.75rem;line-height:0.8125rem;display:inline-block;}26m ago"
-#> [33] "Putin is silent on Biden’s victory, foreshadowing tense years ahead.1h ago"                                                                                                                                                                                                                                                          
-#> [34] "Christian conservatives reflect on Trump’s loss and look ahead.2h ago"                                                                                                                                                                                                                                                               
-#> [35] "Here are 5 things the Biden administration could do quickly on the environment.2h ago"                                                                                                                                                                                                                                               
-#> [36] "President"                                                                                                                                                                                                                                                                                                                           
-#> [37] "Senate"                                                                                                                                                                                                                                                                                                                              
-#> [38] "House"                                                                                                                                                                                                                                                                                                                               
-#> [39] "Senate"                                                                                                                                                                                                                                                                                                                              
-#> [40] "House"                                                                                                                                                                                                                                                                                                                               
-#> [41] "Can Joe Biden and Mitch McConnell Get It Done?"                                                                                                                                                                                                                                                                                      
-#> [42] "Why the Biden Economy Could Be the Same Long Slog as the Obama Economy"                                                                                                                                                                                                                                                              
-#> [43] "Kamala Harris’s ancestral village in India rejoiced, but many wondered what changes may come."                                                                                                                                                                                                                                       
-#> [44] "‘It’s Such a Relief’: Biden Voters Rebuild a Wall That Trump Smashed"                                                                                                                                                                                                                                                                
-#> [45] "As a Bitter Election Ends, 26 Americans Look to the Future"                                                                                                                                                                                                                                                                          
-#> [46] "Christian Conservatives Respond to Trump’s Loss and Look Ahead"                                                                                                                                                                                                                                                                      
-#> [47] "For 9 of 10 Voters, Protests Over Police Violence Played Role in Their Choice"                                                                                                                                                                                                                                                       
-#> [48] "What’s Next for Trump? Family Business Awaits His Return"                                                                                                                                                                                                                                                                            
-#> [49] "Georgia, From Reliably Republican to Political Ground Zero"                                                                                                                                                                                                                                                                          
-#> [50] "How Biden Flipped Pennsylvania and Won the Election"                                                                                                                                                                                                                                                                                 
-#> [51] "Here’s an overview of Joe Biden’s positions on coronavirus, health care, the economy, taxes and climate change."                                                                                                                                                                                                                     
-#> [52] "AT HOME"                                                                                                                                                                                                                                                                                                                             
-#> [53] "Opinion"                                                                                                                                                                                                                                                                                                                             
-#> [54] "Editors’ Picks"                                                                                                                                                                                                                                                                                                                      
-#> [55] "Advertisement"
+#>  [1] "Listen to ‘The Daily’"                                                                                                   
+#>  [2] "Listen to ‘The Argument’"                                                                                                
+#>  [3] "In the ‘At Home’ Newsletter"                                                                                             
+#>  [4] "Indonesian Jetliner Crashes Into the Sea After Takeoff"                                                                  
+#>  [5] "He Dreamed of Being a Police Officer, Then Was Killed by a Pro-Trump Mob"                                                
+#>  [6] "11 Journalists on Covering the Capitol Siege: ‘This Could Get Ugly’"                                                     
+#>  [7] "Trump’s Legacy: Voters Who Reject Democracy and Any Politics but Their Own"                                              
+#>  [8] "Bravery or reputation management? The resignations of some Trump officials are drawing skepticism."                      
+#>  [9] "Here are the Trump aides who plan to stay to the end."                                                                   
+#> [10] "As Coronavirus Mutates, the World Stumbles Again to Respond"                                                             
+#> [11] "False Reports of a New ‘U.S. Variant’ Came from White House Task Force"                                                  
+#> [12] "‘Our New York Moment’: Virus Surges in Southern California"                                                              
+#> [13] "Four Reasons the N.F.L. Shattered Its Scoring Record in 2020"                                                            
+#> [14] "Covid-19 is forcing N.F.L. players and other pro athletes to make unusually hard decisions about work-life balance."     
+#> [15] "The Weekender"                                                                                                           
+#> [16] "Did you follow the headlines this week? Take our quiz to find out."                                                      
+#> [17] "Awe and Shock"                                                                                                           
+#> [18] "Can Donald Trump Survive Without Twitter?"                                                                               
+#> [19] "Far-Right Protesters Stormed Germany’s Parliament. What Can America Learn?"                                              
+#> [20] "Listen to ‘Sway’: If You Were on Parler, You Saw the Mob Coming"                                                         
+#> [21] "Impeach Now. Running Out the Clock on Trump Is Cowardly and Dangerous."                                                  
+#> [22] "Stop Pretending ‘This Is Not Who We Are’"                                                                                
+#> [23] "Neil Sheehan Forced an American Reckoning"                                                                               
+#> [24] "Appeasement Got Us Where We Are"                                                                                         
+#> [25] "This Is When the Fever Breaks"                                                                                           
+#> [26] "How to Ensure This Never Happens Again"                                                                                  
+#> [27] "More Immigrants Will Come to the U.S. Under President Biden. That’s a Good Thing."                                       
+#> [28] "He Was Going to Close the Family Diner. Then He Got a Sign."                                                             
+#> [29] "Louise Linton Has Made a Movie"                                                                                          
+#> [30] "The Man Who Turned Credit-Card Points Into an Empire"                                                                    
+#> [31] "Site Index"                                                                                                              
+#> [32] "Site Information Navigation"                                                                                             
+#> [33] "Democrats Lay Groundwork for Impeaching Trump Again"                                                                     
+#> [34] "‘I Want Him Out’: Murkowski Is First G.O.P. Senator to Call for Removal"                                                 
+#> [35] "Twitter Permanently Bans Trump, Capping Online Revolt"                                                                   
+#> [36] "Google and Apple told Parler, a popular platform for conservatives, to step up its policing to stay in their app stores."
+#> [37] "Can a president be impeached in 12 days? Here’s how the process might work."                                             
+#> [38] "In Capital, a G.O.P. Crisis. At the R.N.C. Meeting, a Trump Celebration."                                                
+#> [39] "Senator Josh Hawley, who drew condemnation for challenging the election results, defended his decision."                 
+#> [40] "Seeing the Confederate flag in the Capitol was a jarring first in U.S. history. Historians weighed in on the moment."    
+#> [41] "For those who survived the Nazi death camp, pictures of a man in a “Camp Auschwitz” sweatshirt were painful."            
+#> [42] "Opinion"                                                                                                                 
+#> [43] "Editors’ Picks"                                                                                                          
+#> [44] "Advertisement"
 ```
 
 Further, it’s possible to filter the results using the `contain`
 argument:
 
 ``` r
-
 titles_scrap(link = "https://www.nytimes.com/", contain = "TrUMp", case_sensitive = FALSE)
-#> [1] "We Hereby Dump Trump"                                                 
-#> [2] "Is There a Trumpism After Trump?"                                     
-#> [3] "‘Saturday Night Live’ Sends Off Trump With a Ballad"                  
-#> [4] "As Biden Plans for Day 1, G.O.P. Navigates Trump’s Refusal to Concede"
-#> [5] "Christian conservatives reflect on Trump’s loss and look ahead.1h ago"
-#> [6] "‘It’s Such a Relief’: Biden Voters Rebuild a Wall That Trump Smashed" 
-#> [7] "Christian Conservatives Respond to Trump’s Loss and Look Ahead"       
-#> [8] "What’s Next for Trump? Family Business Awaits His Return"
+#> [1] "He Dreamed of Being a Police Officer, Then Was Killed by a Pro-Trump Mob"                          
+#> [2] "Trump’s Legacy: Voters Who Reject Democracy and Any Politics but Their Own"                        
+#> [3] "Bravery or reputation management? The resignations of some Trump officials are drawing skepticism."
+#> [4] "Here are the Trump aides who plan to stay to the end."                                             
+#> [5] "Can Donald Trump Survive Without Twitter?"                                                         
+#> [6] "Impeach Now. Running Out the Clock on Trump Is Cowardly and Dangerous."                            
+#> [7] "Democrats Lay Groundwork for Impeaching Trump Again"                                               
+#> [8] "Twitter Permanently Bans Trump, Capping Online Revolt"                                             
+#> [9] "In Capital, a G.O.P. Crisis. At the R.N.C. Meeting, a Trump Celebration."
 ```
 
-## paragraphs\_scrap()
+## `paragraphs_scrap()`
 
 In the same way, we can use the `paragraphs_scrap()` function to extract
 paragraphs. This function relies on the `p` HTML tag.
@@ -339,7 +249,6 @@ Let’s get some paragraphs from the lovely
 [ropensci.org](https://ropensci.org/) website:
 
 ``` r
-
 paragraphs_scrap(link = "https://ropensci.org/")
 #>  [1] ""                                                                                                                                                                                                                                                                        
 #>  [2] "We help develop R packages for the sciences via community driven learning, review and\nmaintenance of contributed software in the R ecosystem"                                                                                                                           
@@ -360,8 +269,8 @@ paragraphs_scrap(link = "https://ropensci.org/")
 #> [17] "Or browse scientific publications that cited our packages."                                                                                                                                                                                                              
 #> [18] "Our suite of packages is comprised of contributions from staff engineers and the wider R\ncommunity via a transparent, constructive and open review process utilising GitHub's open\nsource infrastructure."                                                             
 #> [19] "We combine academic peer reviews with production software code reviews to create a\ntransparent, collaborative & more efficient review process\n  "                                                                                                                      
-#> [20] "Based on best practices of software development and standards of R, it’s\napplications and user base."                                                                                                                                                                   
-#> [21] "Our diverse community of academics, data scientists and developers provide a\nplatform for shared learning, collaboration and reporoducible science"                                                                                                                     
+#> [20] "Based on best practices of software development and standards of R, its\napplications and user base."                                                                                                                                                                    
+#> [21] "Our diverse community of academics, data scientists and developers provide a\nplatform for shared learning, collaboration and reproducible science"                                                                                                                      
 #> [22] "We welcome you to join us and help improve tools and practices available to\nresearchers while receiving greater visibility to your contributions. You can\ncontribute with your packages, resources or post questions so our members will help\nyou along your process."
 #> [23] "Discover, learn and get involved in helping to shape the future of Data Science"                                                                                                                                                                                         
 #> [24] "Join in our quarterly Community Calls with fellow developers and scientists - open\nto all"                                                                                                                                                                              
@@ -377,19 +286,17 @@ If needed, it’s possible to collapse the paragraphs into one bag of
 words:
 
 ``` r
-
 paragraphs_scrap(link = "https://ropensci.org/", collapse = TRUE)
-#> [1] " We help develop R packages for the sciences via community driven learning, review and\nmaintenance of contributed software in the R ecosystem Use our carefully vetted, staff- and community-contributed R software tools that lower barriers to working with local and remote scientific data sources. Combine our tools with the rich ecosystem of R packages. Workflow Tools for Your Code and Data Get Data from the Web Convert and Munge Data Document and Release Your Data Visualize Data Work with Databases From R Access, Manipulate, Convert Geospatial Data Interact with Web Resources Use Image & Audio Data Analyze Scientific Papers (and Text in General) Secure Your Data and Workflow Handle and Transform Taxonomic Information Get inspired by real examples of how our packages can be used. Or browse scientific publications that cited our packages. Our suite of packages is comprised of contributions from staff engineers and the wider R\ncommunity via a transparent, constructive and open review process utilising GitHub's open\nsource infrastructure. We combine academic peer reviews with production software code reviews to create a\ntransparent, collaborative & more efficient review process\n   Based on best practices of software development and standards of R, it’s\napplications and user base. Our diverse community of academics, data scientists and developers provide a\nplatform for shared learning, collaboration and reporoducible science We welcome you to join us and help improve tools and practices available to\nresearchers while receiving greater visibility to your contributions. You can\ncontribute with your packages, resources or post questions so our members will help\nyou along your process. Discover, learn and get involved in helping to shape the future of Data Science Join in our quarterly Community Calls with fellow developers and scientists - open\nto all Upcoming events including meetings at which our team members are speaking. The latest developments from rOpenSci and the wider R community Release notes, updates and package related developements A digest of R package and software review news, use cases, blog posts, and events, curated every two weeks. Subscribe to get it in your inbox, or check the archive. Happy rOpenSci users can be found at Except where otherwise noted, content on this site is licensed under the CC-BY license •\nPrivacy Policy"
+#> [1] " We help develop R packages for the sciences via community driven learning, review and\nmaintenance of contributed software in the R ecosystem Use our carefully vetted, staff- and community-contributed R software tools that lower barriers to working with local and remote scientific data sources. Combine our tools with the rich ecosystem of R packages. Workflow Tools for Your Code and Data Get Data from the Web Convert and Munge Data Document and Release Your Data Visualize Data Work with Databases From R Access, Manipulate, Convert Geospatial Data Interact with Web Resources Use Image & Audio Data Analyze Scientific Papers (and Text in General) Secure Your Data and Workflow Handle and Transform Taxonomic Information Get inspired by real examples of how our packages can be used. Or browse scientific publications that cited our packages. Our suite of packages is comprised of contributions from staff engineers and the wider R\ncommunity via a transparent, constructive and open review process utilising GitHub's open\nsource infrastructure. We combine academic peer reviews with production software code reviews to create a\ntransparent, collaborative & more efficient review process\n   Based on best practices of software development and standards of R, its\napplications and user base. Our diverse community of academics, data scientists and developers provide a\nplatform for shared learning, collaboration and reproducible science We welcome you to join us and help improve tools and practices available to\nresearchers while receiving greater visibility to your contributions. You can\ncontribute with your packages, resources or post questions so our members will help\nyou along your process. Discover, learn and get involved in helping to shape the future of Data Science Join in our quarterly Community Calls with fellow developers and scientists - open\nto all Upcoming events including meetings at which our team members are speaking. The latest developments from rOpenSci and the wider R community Release notes, updates and package related developements A digest of R package and software review news, use cases, blog posts, and events, curated every two weeks. Subscribe to get it in your inbox, or check the archive. Happy rOpenSci users can be found at Except where otherwise noted, content on this site is licensed under the CC-BY license •\nPrivacy Policy"
 ```
 
-## weblink\_scrap()
+## `weblink_scrap()`
 
 `weblink_scrap()` is used to srape the web links available within a web
 page. Useful in some cases, for example, getting a list of the available
 PDFs:
 
 ``` r
-
 weblink_scrap(link = "https://www.worldbank.org/en/access-to-information/reports/", 
               contain = "PDF", 
               case_sensitive = FALSE)
@@ -412,6 +319,60 @@ weblink_scrap(link = "https://www.worldbank.org/en/access-to-information/reports
 #> [17] "http://pubdocs.worldbank.org/en/270371588347691497/pdf/Access-to-Information-Policy-Arabic.pdf"                  
 #> [18] "http://pubdocs.worldbank.org/en/939471588348288176/pdf/Access-to-Information-Directive-Procedure-Arabic.pdf"     
 #> [19] "http://pubdocs.worldbank.org/en/248301574182372360/World-Bank-consultations-guidelines.pdf"
+```
+
+## `images_scrap()` and `images_preview()`
+
+> (only available in the development version)
+
+`images_preview()` allows you to scrape the URLs of the images available
+within a web page so that you can choose which images **extension** (see
+below) you want to focus on.
+
+Let’s say we want to list all the images from the official
+[RStudio](https://rstudio.com/) website:
+
+``` r
+images_preview(link = "https://rstudio.com/")
+#>  [1] "https://dc.ads.linkedin.com/collect/?pid=218281&fmt=gif"                                                                       
+#>  [2] "https://www.facebook.com/tr?id=151855192184380&ev=PageView&noscript=1"                                                         
+#>  [3] "https://d33wubrfki0l68.cloudfront.net/08b39bfcd76ebaf8360ed9135a50a2348fe2ed83/75738/assets/img/logo-white.svg"                
+#>  [4] "https://d33wubrfki0l68.cloudfront.net/f255381cf5fd8f44b899f01761a82ad1f149382d/ade3a/assets/img/2021-logo.png"                 
+#>  [5] "https://d33wubrfki0l68.cloudfront.net/8bd479afc1037554e6218c41015a8e047b6af0f2/d1330/assets/img/libertymutual-logo-regular.png"
+#>  [6] "https://d33wubrfki0l68.cloudfront.net/089844d0e19d6176a5c8ddff682b3bf47dbcb3dc/9ba69/assets/img/walmart-logo.png"              
+#>  [7] "https://d33wubrfki0l68.cloudfront.net/a4ebff239e3de426fbb43c2e34159979f9214ce2/fabff/assets/img/janssen-logo-2.png"            
+#>  [8] "https://d33wubrfki0l68.cloudfront.net/6fc5a4a8c3fa96eaf7c2dc829416c31d5dbdb514/0a559/assets/img/accenture-logo.png"            
+#>  [9] "https://d33wubrfki0l68.cloudfront.net/d66c3b004735d83f205bc8a1c08dc39cc1ca5590/2b90b/assets/img/nasa-logo.png"                 
+#> [10] "https://d33wubrfki0l68.cloudfront.net/521a038ed009b97bf73eb0a653b1cb7e66645231/8e3fd/assets/img/rstudio-icon.png"              
+#> [11] "https://d33wubrfki0l68.cloudfront.net/19dbfe44f79ee3249392a5effaa64e424785369e/91a7c/assets/img/connect-icon.png"              
+#> [12] "https://d33wubrfki0l68.cloudfront.net/edf453f69b61f156d1d303c9ebe42ba8dc05e58a/213d1/assets/img/icon-rspm.png"                 
+#> [13] "https://d33wubrfki0l68.cloudfront.net/62bcc8535a06077094ca3c29c383e37ad7334311/a263f/assets/img/logo.svg"                      
+#> [14] "https://d33wubrfki0l68.cloudfront.net/9249ca7ba197318b488c0b295b94357694647802/6d33b/assets/img/logo-lockup.svg"               
+#> [15] "https://d33wubrfki0l68.cloudfront.net/30ef84abbbcfbd7b025671ae74131762844e90a1/3392d/assets/img/bcorps-logo.svg"
+```
+
+`images_scrap()` on the other hand download the images. It takes the
+following arguments:
+
+-   **link**: The URL of the web page;
+
+-   **imgpath**: The destination folder of your images. It defaults to
+    `getwd()`
+
+-   **extn**: the extension of the image: jpg, png, jpeg … among others;
+
+-   **askRobot**: ask the robots.txt file if it’s permitted to scrape
+    the web page.
+
+In the following example we extract all the `png` images from
+[RStudio](https://rstudio.com/) :
+
+``` r
+# Suppose we're in a project which has a folder called my_images: 
+
+images_scrap(link = "https://rstudio.com/", 
+             imgpath = here::here("my_images"), 
+             extn = "png") # without the .
 ```
 
 ## Code of Conduct

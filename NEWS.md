@@ -1,6 +1,25 @@
+# ralger 2.2.1
+
++ Adding the `images_scrap()` function which allows the user to download images from a website
++ Adding the `images_preview()` function which allows the user to list the images url from a specific web page
++ Wrapping `paragraphs_scrap()` within a `tryCatch` function. 
++ adding the string::stri_remove_empty() to the scrap() function in order to remove empty elements
+
+
 # ralger 2.2.0
 
+I have wrapped `ralger` functions inside a `tryCatch()` function. Now `ralger` detects catches the following errors: 
+
++ No internet connection: In this case, `ralger` displays a message and returns `NA` 
++ Invalid link: package's functions display an informative message and returns also `NA`
+
+
 # ralger 2.1.0
+
++ code cleaning 
++ removing some dependencies
++ modifying the message displayed by the robot.txt
++ now titles_scrap() scrapes h1, h2 & h3 (previously only h1 and h2)
 
 # ralger 2.0.1
 
