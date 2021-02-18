@@ -1,4 +1,7 @@
 test_that("paragraphs_scrap() works", {
+
+  testthat::skip_on_cran()
+
   expect_identical(
 
     paragraphs_scrap(link = "https://www.un.org/en/")
