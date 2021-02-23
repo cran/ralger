@@ -1,7 +1,7 @@
 Package: ralger
 Type: Package
 Title: Easy Web Scraping
-Version: 2.2.2
+Version: 2.2.3
 Authors@R: c(
     person("Mohamed El Fodil", "Ihaddaden", email = "ihaddaden.fodeil@gmail.com", role = c("aut", "cre")),
     person("Ezekiel", "Ogundepo", role = c("ctb")), 
@@ -19,9 +19,9 @@ Imports: rvest, xml2, tidyr, dplyr, stringr, robotstxt, crayon, curl,
 Suggests: knitr, testthat, rmarkdown, covr
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2021-02-18 21:03:47 UTC; Administrateur
+Packaged: 2021-02-22 17:56:13 UTC; Administrateur
 Author: Mohamed El Fodil Ihaddaden [aut, cre],
   Ezekiel Ogundepo [ctb],
   Romain François [ctb]
 Repository: CRAN
-Date/Publication: 2021-02-18 22:10:03 UTC
+Date/Publication: 2021-02-23 10:20:05 UTC
